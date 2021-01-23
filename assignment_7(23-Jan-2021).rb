@@ -1,6 +1,7 @@
 class CheckPrime
+    #Using Regex to check if prime?.
     def if_prime(n)
-    ('1' * n) !~ /^1?$|^(11+?)\1+$/
+        ('1' * n) !~ /^1?$|^(11+?)\1+$/
     end
     
     def find_prime
