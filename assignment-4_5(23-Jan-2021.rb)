@@ -1,0 +1,39 @@
+class Student
+    @@student_arr  = []
+    def push_info(hash)
+    student_hash ={ 'name' => '', 'roll_no' => '', 'marks' => '' }
+    student_hash["name"] = hash[:name]
+    student_hash["roll_no"] = hash[:roll_no]
+    student_hash["marks"] = hash[:marks]
+    @@student_arr.push(student_hash)
+    return(@@student_arr)
+    end
+    
+    def if_passed(name, student_arr)
+        student_arr.each do |student|
+            return( student["name"] === name && student["marks"] >=35 ? "passed" : "failed")
+        end
+    end
+    
+    def result(name, student_arr)
+        student_arr.each do |student|
+            if student["name"] === name  
+                return( "#{student["marks"]}%"  )
+            end
+        end
+        
+        return("Student Not Found")
+    end
+end
+
+
+
+s = Student.new
+
+s.push_info(name: 'Akshat', roll_no: 3, marks: 5)
+s.push_info(name: 'Akshar', roll_no: 3, marks: 50)
+student_arr = s.push_info(name: 'Akshara', roll_no: 3, marks: 50)
+
+puts(s.if_passed('Akshat',student_arr))
+puts(s.result('Akshar',student_arr))
+puts(s.result('Akshay',student_arr))
