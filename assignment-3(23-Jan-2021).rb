@@ -1,5 +1,9 @@
-def volume(r, h)
-    return(3.14*(r**2)*h)
+class Cylinder
+    RADIUS = 2.freeze
+    def volume(h)
+        return(3.14*(RADIUS**2)*h)
+    end
 end
 
-puts(volume(2,2))
+c = Cylinder.new()
+puts(c.volume(2))
