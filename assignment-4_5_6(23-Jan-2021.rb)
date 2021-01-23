@@ -24,6 +24,28 @@ class Student
         
         return("Student Not Found")
     end
+    
+    def get_grade(name, student_arr)
+        result = -1
+        student_arr.each do |student|
+            if student["name"] === name  
+                result =  student["marks"].to_i
+            end
+        end
+        
+        case result
+        when 91..100
+            return("A")
+        when 81..90
+            return("B")
+        when 71..80
+            return("C")
+        when 0..70
+            return("D")
+        else
+            return("Error: Result Not Found!")
+        end
+    end
 end
 
 
@@ -31,9 +53,11 @@ end
 s = Student.new
 
 s.push_info(name: 'Akshat', roll_no: 3, marks: 5)
-s.push_info(name: 'Akshar', roll_no: 3, marks: 50)
+s.push_info(name: 'Akshar', roll_no: 3, marks: 90)
 student_arr = s.push_info(name: 'Akshara', roll_no: 3, marks: 50)
 
 puts(s.if_passed('Akshat',student_arr))
 puts(s.result('Akshar',student_arr))
-puts(s.result('Akshay',student_arr))
+puts(s.result('Aksha',student_arr))
+puts(s.get_grade('Akshar',student_arr))
+puts(s.get_grade('Aksha',student_arr))
