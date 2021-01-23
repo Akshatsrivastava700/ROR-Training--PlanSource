@@ -6,11 +6,7 @@ class CheckPrime
     
     def find_prime
         for n in 0..100
-            if if_prime(n)
-                puts( n.to_s[-1] == '7' ? "#{n} is prime --> Skipped" : "#{n} is prime --> True")
-            else
-                puts( "#{n} is prime --> False" )
-            end
+             if_prime(n) ? puts( n.to_s[-1] == '7' ? "#{n} is prime --> Skipped" : "#{n} is prime --> True") : puts( "#{n} is prime --> False" )
         end
     end
 end
