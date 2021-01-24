@@ -1,18 +1,22 @@
 class Vehicle
-    def initailize(tyre,seats)
+    def initialize(tyre,seats)
         @tyres = tyre
-        @seats = seat
+        @seats = seats
     end
     
     def vehicle_type
-        total = @tyres + @seats
+        total = 0
+        if  @seats - @tyres >= 1
+            total = @tyres + @seats
+        end    
+            
         case total
         when 8..11
             return("car")
         when 4
             return("bike")
         else
-            return("Not Found")
+            return("Not a Vehicle")
         end
     end
 end
@@ -23,4 +27,12 @@ class Car < Vehicle
     end
 end
 
-puts(Car.new(4,4).vehicle_type)
+
+class Bike < Vehicle
+    def vehicle_type
+        super
+    end
+end
+
+puts(Car.new(4,5).vehicle_type)
+puts(Bike.new(2,4).vehicle_type)
