@@ -1,5 +1,25 @@
+<div>
 <%= @blog.title %>
 <%= @blog.content %>
 <% if @owner == true %>
 <%= link_to 'Delete', blogs_destroy_path(:id => @blog.id) %>
 <% end %>
+</div>
+<div>
+<%= form_with model: Comment, url: comments_create_path, local: true  do |f| %>
+        <%= f.text_area :content %><br />
+        <%= f.text_field :user_id, :type => 'hidden', :value => 0 %>
+        <%= f.text_field :blog_id, :type => 'hidden', :value => @blog.id %>
+        <%= f.submit "Add Comment"%><br />
+<% end %>
+</div>
+<div>
+<% @comment.each do |com| %>
+<div>
+  <%= com.content %>
+  <% if com.user_id == current_user.id%>
+    <%= link_to 'Delete', comments_destroy_path(comment_id: com.id, blog_id: @blog.id) %>
+  <% end %>
+</div>
+<% end %>
+</div>

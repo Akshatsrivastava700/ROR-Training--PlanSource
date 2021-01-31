@@ -4,6 +4,7 @@ class BlogsController < ApplicationController
   def index
     @owner = check_owner(params)
     @blog = Blog.find(params[:id])
+    @comment = Comment.where(blog_id: params[:id])
   end
 
   def create
@@ -26,6 +27,7 @@ class BlogsController < ApplicationController
 
 
   private
+
   def set_params
     params.require(:blog).permit(:title, :content, :user_id)
   end
@@ -51,7 +53,7 @@ class BlogsController < ApplicationController
     params[:blog][:user_id] = current_user.id.to_i
     @draft = Draft.new(set_params)
     if @draft.save
-      redirect_to root_path, notice: 'Post Added'
+      redirect_to root_path, notice: 'Draft Saved'
     else
       redirect_to root_path , notice: 'Error: Post not added'
     end
