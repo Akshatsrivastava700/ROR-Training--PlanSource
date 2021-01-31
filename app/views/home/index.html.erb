@@ -1,15 +1,24 @@
-<%= form_for :post, :url => { :action => "create", :controller => 'blogs' }  do |f| %>
+<%= form_with model: Blog, url: blogs_create_path, local: true  do |f| %>
         <%=f.text_field :title, :placeholder => ' Title ' %><br />
         <%= f.text_area :content, :placeholder => ' Content ' %><br />
         <%= f.text_field :user_id, :type => 'hidden', :vlaue => 0 %><br />
-        <%= f.submit "Add Question"%><br />
+        <%= f.submit "Save Draft"%>
+        <%= f.submit "Add Blog"%><br />
 <% end %>
 
 <% @blogs.each do |blog| %>
 <div>
   <h4>Title</h4><br />
-  <%= link_to blog.title, blogs_index_path(:id => blog.id, :owner_id => blog.user_id) %><br />
+  <%= link_to blog.title, blogs_index_path(:id => blog.id) %><br />
 </div>
 <% end %>
-
+<h4>Draft</h4>
+<% @draft.each do |draft| %>
+  <%= form_with model: Blog, url: blogs_create_path, local: true  do |f| %>
+          <%=f.text_field :title, value: draft.title %><br />
+          <%= f.text_area :content, value: draft.content %><br />
+          <%= f.text_field :user_id, :type => 'hidden', :vlaue => 0 %><br />
+          <%= f.submit "Add Blog"%><br />
+  <% end %>
+<% end %>
 <%= link_to  "Logout", destroy_user_session_path, method: :delete %>

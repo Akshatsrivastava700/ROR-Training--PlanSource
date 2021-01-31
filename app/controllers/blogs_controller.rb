@@ -1,16 +1,16 @@
 class BlogsController < ApplicationController
+  before_action :check_draft, only: [:create]
+  before_action :if_user_signed_in?
   def index
     @owner = check_owner(params)
     @blog = Blog.find(params[:id])
   end
 
   def create
-    params[:post][:user_id] = current_user.id.to_i
-    @blog = Blog.new(set_params)
-    if @blog.save
-      redirect_to root_path, notice: 'Post Added'
+    if params[:commit] == "Add Blog"
+      blog_save(params)
     else
-      redirect_to root_path , notice: 'Error: Post not added'
+      blog_save_draft(params)
     end
   end
 
@@ -23,16 +23,42 @@ class BlogsController < ApplicationController
     end
   end
 
+
+
   private
   def set_params
-    params.require(:post).permit(:title, :content, :user_id)
+    params.require(:blog).permit(:title, :content, :user_id)
   end
 
   def check_owner(params)
-    if params[:owner_id].to_i == current_user.id
-      puts(params[:owner_id])
+    if Blog.find(params[:id]).user_id.to_i == current_user.id
       return(true)
     end
     return(false)
+  end
+
+  def blog_save(params)
+    params[:blog][:user_id] = current_user.id.to_i
+    @blog = Blog.new(set_params)
+    if @blog.save
+      redirect_to root_path, notice: 'Post Added'
+    else
+      redirect_to root_path , notice: 'Error: Post not added'
+    end
+  end
+
+  def blog_save_draft(params)
+    params[:blog][:user_id] = current_user.id.to_i
+    @draft = Draft.new(set_params)
+    if @draft.save
+      redirect_to root_path, notice: 'Post Added'
+    else
+      redirect_to root_path , notice: 'Error: Post not added'
+    end
+  end
+
+  def check_draft
+      draft = Draft.where(user_id: current_user.id)
+      draft.delete(draft.ids[0])
   end
 end
