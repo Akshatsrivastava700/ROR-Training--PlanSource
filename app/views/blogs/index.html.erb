@@ -1,0 +1,5 @@
+<%= @blog.title %>
+<%= @blog.content %>
+<% if @owner == true %>
+<%= link_to 'Delete', blogs_destroy_path(:id => @blog.id) %>
+<% end %>
